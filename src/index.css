@@ -1,3 +1,9 @@
+:root{
+  --BGColor: #F0F0F0;
+  --Color1 : rgb(40, 13, 49);
+  
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +16,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.M0{
+  margin:0;
+}
+.MT0{
+  margin-top: 0;
+}
+.MB0{
+  margin-bottom: 0;
 }
