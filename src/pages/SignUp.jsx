@@ -49,7 +49,7 @@ const SignUp = () => {
             ? <ProgressIndicator type={2}/>
             : <div id = "Sign-Up">
                 <form noValidate className="Form" onSubmit={handleSubmit(onSubmit)}>
-                    <h2 className="MT0">Create New Account (Sign Up)</h2>
+                    <h2 className="MT0">Create New Account</h2>
                     {/* FIRST NAME */}
                     <div className="Field">
                         <input 
