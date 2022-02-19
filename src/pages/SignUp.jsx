@@ -24,7 +24,8 @@ const SignUp = () => {
             lastName: data.lastName.trim(),
             businessName: data.businessName.trim(),
             website: data.website.trim(),
-            about: data.about.trim()
+            about: data.about.trim(),
+            address: data.address.trim(),
         })
         setLoading(false);        
 
@@ -145,6 +146,19 @@ const SignUp = () => {
                         />
                         {errors.businessName && errors.businessName.type==="pattern" && <span className="Error">Invalid business  name</span>}
                     
+                    </div>
+
+                    {/* Address */}
+                    <div className="Field">
+                        <input 
+                            type="text" 
+                            placeholder="Address"
+                            {
+                                ...register("address",{
+                                
+                                })
+                            }
+                        />
                     </div>
 
                     {/* PHONE NUMBER (LANDLINE)*/}
