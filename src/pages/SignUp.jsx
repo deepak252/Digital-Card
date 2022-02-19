@@ -223,7 +223,7 @@ const SignUp = () => {
                                 ...register("confirmPassword",{
                                     // required : true,
                                     validate:()=>{
-                                        if(watch("password")!=watch("confirmPassword")){
+                                        if(watch("password")!==watch("confirmPassword")){
                                             return false;                                        
                                         }
                                     }
