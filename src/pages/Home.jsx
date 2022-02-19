@@ -6,19 +6,19 @@ import { signOutUser, getUserData } from '../services/firebaseAuthService';
 import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
-import { Grid } from 'react-loader-spinner';
+import ProgressIndicator from '../components/ProgressIndicator';
 
 const Home = () => {
     const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
-    const [user,fetchingUser, error] = useAuthState(auth);
+    const [user,loadingAuthState, error] = useAuthState(auth);
 
     useEffect(async () => {
         setLoading(true);
         console.log("Current user = ",user);
-        console.log("Loading = ", fetchingUser);
-        if (fetchingUser) return;
+        console.log("loadingAuthState = ", loadingAuthState);
+        if (loadingAuthState) return;
         if (!user){
             console.log("User not signed in");
             return navigate("/signin");
@@ -27,18 +27,12 @@ const Home = () => {
         setUserInfo(userData);
         setLoading(false);
 
-    }, [user, fetchingUser]);
+    }, [user, loadingAuthState]);
     return (
         <div id="Home">
             {
                 isLoading
-                ? <Grid 
-                    
-                    heigth="100"
-                    width="100"
-                    color='var(--Color1)'
-                    ariaLabel='loading'
-                />
+                ? <ProgressIndicator />
                 : <div>
                     <DigitalCard userInfo = {userInfo}/>
                     <button onClick={async()=>{await signOutUser()}} className="Btn-Sign-Out">SIGN OUT</button>
