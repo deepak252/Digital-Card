@@ -16,7 +16,7 @@ const signInUsingEmailPassword = async (email,password) =>{
 
 const signUpUsingEmailPassword = async (data) =>{
     try{
-        const {password,...userData} = data;
+        const {password,confirmPassword, ...userData} = data;
         console.log({...userData});
         const res = await createUserWithEmailAndPassword(auth,data.email,password);
         console.log("Account created successfully...");

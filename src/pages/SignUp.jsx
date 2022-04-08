@@ -28,7 +28,6 @@ const SignUp = () => {
             address: data.address.trim(),
         })
         setLoading(false);        
-
     }
 
     useEffect(() => {
