@@ -20,12 +20,13 @@ const SignIn = () => {
         
         
     }
-
+    
     useEffect(() => {
         setLoading(true);
         console.log("Current user = ",user);
         console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
+        // If user signed in, navigate to HOME page
         if (user){
             console.log("User is signed in");
             return navigate("/");

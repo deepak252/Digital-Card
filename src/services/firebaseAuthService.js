@@ -6,7 +6,7 @@ import {doc,setDoc,getDoc} from "firebase/firestore";
 
 const signInUsingEmailPassword = async (email,password) =>{
     try{
-        const res = await signInWithEmailAndPassword(auth,email,password);
+        await signInWithEmailAndPassword(auth,email,password);
         console.log("Signed in successfully");
     }catch(e){
         console.log(e);
@@ -20,7 +20,8 @@ const signUpUsingEmailPassword = async (data) =>{
         console.log({...userData});
         const res = await createUserWithEmailAndPassword(auth,data.email,password);
         console.log("Account created successfully...");
-        // Adding user data to firestore USERS collection
+        
+        // Add user data to firestore "users" collection
         let user = res.user;
         const userDocRef = doc(db,"users",user.uid);
         await setDoc(userDocRef,{
@@ -44,7 +45,7 @@ const signOutUser = async () =>{
         alert(e.message);
     }
 }
-
+// Get User Data from Firebase Firestore
 const getUserData = async (userId) =>{
     try{
         const userDocRef = doc(db,"users",userId);

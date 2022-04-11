@@ -1,7 +1,7 @@
 import React from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
-import { FaUserTie, FaPhone, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
+import {FaUser, FaImage, FaUserTie, FaPhone, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DigitalCard = ({ userInfo }) => {
   
@@ -10,7 +10,16 @@ const DigitalCard = ({ userInfo }) => {
       <div className="card">
         <div className="card-front">
           <div className="left">
-            <h4>{userInfo.businessName}</h4>
+          {/* userInfo.about */}
+            <div id="Img-Profile">
+              {
+                userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
+                ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
+                // : <FaUser id = "Img-Profile" size = "50" color="#1187ac"/>
+                : <img id = "Img-Profile" src={userInfo.imgUrl} alt="Profile Image" />
+              }
+            </div>
+            <h3>{userInfo.businessName}</h3>
           </div>
           <div className="right">
             <div className="person right-content">
@@ -42,7 +51,6 @@ const DigitalCard = ({ userInfo }) => {
           </div>
         </div>
         <div className="card-back">
-          {/* <img src="2553.jpg" /> */}
           {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
           <QRCode id = "qr-code" value={userInfo.website} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
           <a>PHONE :- {userInfo.phone}</a><br />
@@ -54,19 +62,3 @@ const DigitalCard = ({ userInfo }) => {
 }
 
 export default DigitalCard;
-
-// return (
-//     <div id = "Digital-Card">
-//         <div className="Card">
-//             <p>First Name : {userInfo.firstName}</p>
-//             <p>Last Name : {userInfo.lastName}</p>
-//             <p>Email : {userInfo.email}</p>
-//             <p>Mobile : {userInfo.mobile}</p>
-//             <p>Business Name : {userInfo.businessName}</p>
-//             <p>Address : {userInfo.address}</p>
-//             <p>Phone : {userInfo.phone}</p>
-//             <p>About : {userInfo.about}</p>
-//             <p>Website : {userInfo.website}</p>
-//         </div>
-//     </div>
-// )

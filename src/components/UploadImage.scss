@@ -1,0 +1,44 @@
+#Add-Image-Container{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    #Btn-Add-Image{
+        margin-bottom: 12px;
+        color: rgb(9, 122, 197);
+        padding:  8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid rgb(9, 122, 197);
+        border-radius: 10px;
+        font-weight: bold;
+    
+        &:hover{
+            cursor: pointer;
+            background-color: rgb(9, 122, 197);
+            color: white,
+        }
+    }
+
+    #Btn-Upload-Image{
+        margin: 6px auto;
+        color: rgb(129, 36, 190);
+        padding:  8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid rgb(129, 36, 190);
+        border-radius: 10px;
+        font-weight: bold;
+    
+        &:hover{
+            cursor: pointer;
+            background-color: rgb(129, 36, 190);
+            color: white,
+        }
+    }
+    
+    #Input-Add-Image{
+        display: none;
+    }
+}

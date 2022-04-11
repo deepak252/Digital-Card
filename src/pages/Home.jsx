@@ -7,17 +7,20 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
 import ProgressIndicator from '../components/ProgressIndicator';
+import { FaSignOutAlt } from 'react-icons/fa';
+import UploadImage from '../components/UploadImage';
 
 const Home = () => {
     const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
     const [user,loadingAuthState, error] = useAuthState(auth);
+    
 
     useEffect(async () => {
         setLoading(true);
         console.log("Current user = ",user);
-        console.log("loadingAuthState = ", loadingAuthState);
+        // if user not signed in, naviagate to SIGNIN page
         if (loadingAuthState) return;
         if (!user){
             console.log("User not signed in");
@@ -34,8 +37,13 @@ const Home = () => {
                 isLoading
                 ? <ProgressIndicator />
                 : <div>
+                    {/* Digital Card Component */}
                     <DigitalCard userInfo = {userInfo}/>
-                    <button onClick={async()=>{await signOutUser()}} className="Btn-Sign-Out">SIGN OUT</button>
+                    {/* Sign Out Button */}
+                    <div onClick={async()=>{await signOutUser()}} id="Btn-Sign-Out" >SIGN OUT <FaSignOutAlt size = "25" style = {{marginLeft: "10px"}}/></div>
+                    {/* Upload Image Button Component */}
+                    <UploadImage  userInfo = {userInfo}/>
+                    
                 </div>
             }
             

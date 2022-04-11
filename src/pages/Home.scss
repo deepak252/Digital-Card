@@ -3,20 +3,27 @@
     text-align: center;
     min-height: 100vh;
     min-width: 100vw;
-    // position: relative;
-    .Btn-Sign-Out{
-        background-color: red;
-        border: none;
-        padding: 15px;
-        color: white;
-        font-weight: bold;
-        margin-bottom: 100px;
-        box-shadow: 3px 3px 10px 2px gray;
+    #Btn-Sign-Out{
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        margin: auto;
+        color: rgb(245, 32, 32);;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid rgb(245, 32, 32);;
         border-radius: 10px;
 
         &:hover{
             cursor: pointer;
+            background-color: rgb(245, 32, 32);
+            color: white,
         }
     }
+
+
+    
 
 }
