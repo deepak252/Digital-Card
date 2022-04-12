@@ -19,7 +19,7 @@ const Home = () => {
 
     useEffect(async () => {
         setLoading(true);
-        console.log("Current user = ",user);
+        // console.log("Current user = ",user);
         // if user not signed in, naviagate to SIGNIN page
         if (loadingAuthState) return;
         if (!user){
@@ -40,7 +40,7 @@ const Home = () => {
                     {/* Digital Card Component */}
                     <DigitalCard userInfo = {userInfo}/>
                     {/* Sign Out Button */}
-                    <div onClick={async()=>{await signOutUser()}} id="Btn-Sign-Out" >SIGN OUT <FaSignOutAlt size = "25" style = {{marginLeft: "10px"}}/></div>
+                    <button onClick={async()=>{await signOutUser()}} id="Btn-Sign-Out" >SIGN OUT <FaSignOutAlt size = "25" style = {{marginLeft: "10px"}}/></button>
                     {/* Upload Image Button Component */}
                     <UploadImage  userInfo = {userInfo}/>
                     

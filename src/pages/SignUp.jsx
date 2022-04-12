@@ -32,7 +32,7 @@ const SignUp = () => {
 
     useEffect(() => {
         setLoading(true);  
-        console.log("Current user = ",user);
+        // console.log("Current user = ",user);
         console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
@@ -248,7 +248,6 @@ const SignUp = () => {
                         />
                         {errors.confirmPassword && errors.confirmPassword.type==="validate" && <span className="Error">Password not match</span>}
                     </div>
-                    {/* <button onClick={()=>{console.log(auth.currentUser)}}>CURRENT USER</button> */}
                     <input className="Btn-Submit" type="submit" value="Create Account" />
 
                     <p style={{textAlign:"center"}}>

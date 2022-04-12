@@ -1,7 +1,7 @@
 import React from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
-import {FaUser, FaImage, FaUserTie, FaPhone, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
+import {FaUser, FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DigitalCard = ({ userInfo }) => {
   
@@ -11,14 +11,12 @@ const DigitalCard = ({ userInfo }) => {
         <div className="card-front">
           <div className="left">
           {/* userInfo.about */}
-            <div id="Img-Profile">
               {
                 userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
                 ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
                 // : <FaUser id = "Img-Profile" size = "50" color="#1187ac"/>
                 : <img id = "Img-Profile" src={userInfo.imgUrl} alt="Profile Image" />
               }
-            </div>
             <h3>{userInfo.businessName}</h3>
           </div>
           <div className="right">
@@ -30,7 +28,7 @@ const DigitalCard = ({ userInfo }) => {
               </div>
             </div>
             <div className="phone right-content">
-              <FaPhone className="icon" />
+              <FaPhoneAlt className="icon" />
               <div>
                 <p>{userInfo.mobile}</p>
 

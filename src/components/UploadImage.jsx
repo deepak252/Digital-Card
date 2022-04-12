@@ -25,7 +25,7 @@ const UploadImage = ({userInfo}) => {
     const uploadImage = async()=>{
         if(imgFile!=null){
             const ext = imgFile.name.split(".").pop();
-            const storageRef = ref(storage, 'images/'+userInfo.uid+'.'+ext);
+            const storageRef = ref(storage, 'images/'+userInfo.uid+'.png');
 
             const metadata = {
                 contentType: 'image/jpeg'
@@ -75,21 +75,21 @@ const UploadImage = ({userInfo}) => {
         }
     }
 
-    useEffect(() => {
-        console.log("Selected Image  : ", imgFile);
+    // useEffect(() => {
+    //     console.log("Selected Image  : ", imgFile);
         
-    }, [imgFile])
+    // }, [imgFile])
     return (
         <div id = "Add-Image-Container">
             <input onChange={addImage} placeholder="sdf" type="file" name="profileImg" id="Input-Add-Image" accept="image/*"/>
-            <div onClick={pickImage} id="Btn-Add-Image" > 
+            <button onClick={pickImage} id="Btn-Add-Image" > 
                 {   imgFile 
                     ? "SELECT ANOTHER" 
                     : userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
                         ? "ADD"
                         : "UPDATE"
                 } IMAGE <FaImage size = "25" style = {{marginLeft: "10px"}}/>
-            </div> 
+            </button> 
             
             {
                 imgFile && <div onClick={uploadImage} id="Btn-Upload-Image" >UPLOAD SELECTED IMAGE <FaUpload size = "25" style = {{marginLeft: "10px"}}/>  </div> 
