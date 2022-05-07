@@ -1,6 +1,6 @@
 import { auth } from "../firebase";
 import { db } from "../firebase";
-import {signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,sendPasswordResetEmail} from "firebase/auth";
 import {doc,setDoc,getDoc} from "firebase/firestore";
 
 
@@ -9,6 +9,19 @@ const signInUsingEmailPassword = async (email,password) =>{
         await signInWithEmailAndPassword(auth,email,password);
         console.log("Signed in successfully");
     }catch(e){
+        console.log(e);
+        alert(e.message);
+    }
+}
+
+const resetPasswordUsingEmail = async (email) => {
+    try {
+        await sendPasswordResetEmail(auth,email);
+
+        console.log("Password reset link sent to email");
+        alert("Password reset link sent to "+email);
+
+    } catch (e) {
         console.log(e);
         alert(e.message);
     }
@@ -68,6 +81,7 @@ const getUserData = async (userId) =>{
 export {
     signInUsingEmailPassword, 
     signUpUsingEmailPassword, 
+    resetPasswordUsingEmail,
     signOutUser,
     getUserData
 };

@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router';
 import { signUpUsingEmailPassword } from '../services/firebaseAuthService';
 import { Link } from 'react-router-dom';
 import ProgressIndicator from '../components/ProgressIndicator';
+// import { db } from '../firebase';
+// import { doc, collection } from "firebase/firestore";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -17,6 +19,10 @@ const SignUp = () => {
 
 
     const onSubmit = async (data) =>{
+        // const collectionRef=collection(db,"temp");
+        // const docRef=doc(collectionRef);  //generating random document id
+        // console.log(docref.id);
+        
         setLoading(true);        
         await signUpUsingEmailPassword({
             ...data,
@@ -136,14 +142,16 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="text" 
-                            placeholder="Business Name"
+                            placeholder="Business Name*"
                             {
                                 ...register("businessName",{
+                                    required : true,
                                     pattern : /^[a-zA-Z ]{2,30}$/,
                                 
                                 })
                             }
                         />
+                        {errors.businessName && errors.businessName.type === "required" && <span className="Error">Business name is required</span>}
                         {errors.businessName && errors.businessName.type==="pattern" && <span className="Error">Invalid business  name</span>}
                     
                     </div>
@@ -152,26 +160,30 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="text" 
-                            placeholder="Address"
+                            placeholder="Address*"
                             {
                                 ...register("address",{
+                                    required:true
                                 
                                 })
                             }
                         />
+                        {errors.address && errors.address.type === "required" && <span className="Error">Address is required</span>}
                     </div>
 
                     {/* PHONE NUMBER (LANDLINE)*/}
                     <div className="Field">
                         <input 
                             type="number" 
-                            placeholder="Phone Number"
+                            placeholder="Phone Number*"
                             {
                                 ...register("phone",{
+                                    required: true,
                                     pattern : /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
                                 })
                             }
                         />
+                        {errors.phone && errors.phone.type === "required" && <span className="Error">Phone number is required</span>}
                         {errors.phone && errors.phone.type==="pattern" && <span className="Error">Invalid phone number</span>}
                     
                     </div>
@@ -180,13 +192,15 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="text" 
-                            placeholder="Website"
+                            placeholder="Website*"
                             {
                                 ...register("website",{
+                                    required: true,
                                     pattern : /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
                                 })
                             }
                         />
+                        {errors.website && errors.website.type === "required" && <span className="Error">Website url is required</span>}
                         {errors.website && errors.website.type==="pattern" && <span className="Error">Enter a valid url</span>}
                     
                     </div>
@@ -195,7 +209,7 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="text" 
-                            placeholder="About"
+                            placeholder="About*"
                             {
                                 ...register("about",{
                                     required : true,
@@ -232,7 +246,7 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="password" 
-                            placeholder="Confirm Password"
+                            placeholder="Confirm Password*"
                             {
                                 ...register("confirmPassword",{
                                     // required : true,

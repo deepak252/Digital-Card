@@ -74,6 +74,9 @@ const SignIn = () => {
                         />
                         {errors.password && errors.password.type==="required" && <span className="Error">Password can't be empty</span>}
                     </div>
+                    
+                        <Link id="forgot-password" to="/forgot-password">Forgot Password?</Link>
+
 
                     <input className="Btn-Submit" type="submit" value="Log In" />
                     <p style={{textAlign:"center"}}>

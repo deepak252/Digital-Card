@@ -1,13 +1,23 @@
-import React from 'react';
+import React,{useState} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
-import {FaUser, FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DigitalCard = ({ userInfo }) => {
+  const [isRotated,updateRotated] = useState(false);
+
+  const rotateCard=()=>{
+    // updateRotated(!isRotated);
+
+    // console.log("Double clicked ", isRotated);
+    // !isRotated ? document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
+    //   : document.getElementsByClassName('card-back')[0].style.transform = 'rotateY(180deg)';
+    // document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)';
+  }
   
   return (
-    <div className="card-wrapper">
-      <div className="card">
+    <div  className="card-wrapper">
+      <div onDoubleClick={rotateCard} className="card">
         <div className="card-front">
           <div className="left">
           {/* userInfo.about */}
@@ -22,29 +32,19 @@ const DigitalCard = ({ userInfo }) => {
           <div className="right">
             <div className="person right-content">
               <FaUserTie className="icon" />
-              <div>
                 <h4>{userInfo.firstName} {userInfo.lastName}</h4>
-                {/* <p>Web Designer</p> */}
-              </div>
             </div>
             <div className="phone right-content">
               <FaPhoneAlt className="icon" />
-              <div>
-                <p>{userInfo.mobile}</p>
-
-              </div>
+              <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
             </div>
             <div className="email right-content">
               <FaEnvelopeOpen className="icon" />
-              <div>
-                <p>{userInfo.email}</p>
-              </div>
+              <a href={"mailto:" +userInfo.email}>{userInfo.email}</a>
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
-              <div>
                 <p>{userInfo.address}</p>
-              </div>
             </div>
           </div>
         </div>
