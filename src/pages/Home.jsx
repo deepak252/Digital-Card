@@ -25,10 +25,13 @@ const Home = () => {
         if (!user){
             console.log("User not signed in");
             return navigate("/signin");
+        }else{
+            //Navigate to specific card page
+            return navigate(`/${user.uid}`);
         }
-        const userData = await getUserData(user.uid);
-        setUserInfo(userData);
-        setLoading(false);
+        // const userData = await getUserData(user.uid);
+        // setUserInfo(userData);
+        // setLoading(false);
 
     }, [user, loadingAuthState]);
     return (

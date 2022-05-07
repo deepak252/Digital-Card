@@ -1,0 +1,19 @@
+#Forgot-Password{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--Color1);
+    min-height: 100vh;
+    text-align: center;
+    color: white;
+    // h1,h2{
+    //     text-align: center;
+    // }
+    
+    #Btn-Back-Home{
+        padding: 6px;
+        margin: 40px 10px;
+    }
+   
+}
