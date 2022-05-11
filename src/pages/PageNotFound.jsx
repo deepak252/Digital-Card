@@ -1,8 +1,8 @@
 import React from 'react';
-import "./UserNotFound.scss";
+import "./PageNotFound.scss";
 import { useNavigate } from 'react-router';
 
-const UserNotFound = () => {
+const PageNotFound = () => {
     const navigate = useNavigate();
     
     const handleBackHome=()=>{
@@ -10,9 +10,9 @@ const UserNotFound = () => {
     }
 
     return ( <>
-            <div id = "Forgot-Password">
+            <div id = "Page-Not-Found">
                 <h1>Error 404</h1>
-                <h3>Data not found</h3>
+                <h3>Page not found</h3>
                 <button id="Btn-Back-Home" onClick={handleBackHome}>
                     BACK TO HOME
                 </button>
@@ -20,5 +20,5 @@ const UserNotFound = () => {
     </>)
 }
 
-export default UserNotFound;
+export default PageNotFound;
 

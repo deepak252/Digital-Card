@@ -28,9 +28,9 @@
     transition: transform 1s;
   }
   //Rotate card
-  .card-wrapper:hover .card {
-    transform: rotateY(180deg);
-  }
+  // .card-wrapper:hover .card {
+  //   transform: rotateY(180deg);
+  // }
   
   .card-front,
   .card-back {

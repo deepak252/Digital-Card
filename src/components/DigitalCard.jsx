@@ -7,11 +7,16 @@ const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
 
   const rotateCard=()=>{
-    // updateRotated(!isRotated);
+    updateRotated(!isRotated);
 
-    // console.log("Double clicked ", isRotated);
-    // !isRotated ? document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
-    //   : document.getElementsByClassName('card-back')[0].style.transform = 'rotateY(180deg)';
+    console.log("Double clicked ", isRotated);
+    if(!isRotated){
+      console.log("rotate");
+      document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
+    }else{
+      console.log("rotate back");
+      document.getElementsByClassName('card-back')[0].style.transform = 'rotateY(180deg)';
+    }
     // document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)';
   }
   
