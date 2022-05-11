@@ -9,34 +9,29 @@ const DigitalCard = ({ userInfo }) => {
   const rotateCard=()=>{
     updateRotated(!isRotated);
 
-    console.log("Double clicked ", isRotated);
     if(!isRotated){
-      console.log("rotate");
       document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
     }else{
-      console.log("rotate back");
-      document.getElementsByClassName('card-back')[0].style.transform = 'rotateY(180deg)';
+      document.getElementsByClassName('card')[0].style.transform = 'rotateY(0deg)';
     }
-    // document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)';
   }
   
   return (
-    <div  className="card-wrapper">
-      <div onDoubleClick={rotateCard} className="card">
+    <div onDoubleClick={rotateCard}  className="card-wrapper">
+      <div  className="card">
         <div className="card-front">
           <div className="left">
           {/* userInfo.about */}
               {
                 userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
                 ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
-                // : <FaUser id = "Img-Profile" size = "50" color="#1187ac"/>
                 : <img id = "Img-Profile" src={userInfo.imgUrl} alt="Profile Image" />
               }
             <h3>{userInfo.businessName}</h3>
           </div>
           <div className="right">
             <div className="person right-content">
-              <FaUserTie className="icon" />
+              <FaUserTie  className="icon" />
                 <h4>{userInfo.firstName} {userInfo.lastName}</h4>
             </div>
             <div className="phone right-content">
