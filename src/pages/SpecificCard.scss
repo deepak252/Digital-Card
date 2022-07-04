@@ -1,0 +1,26 @@
+#Specific-Card{
+    background-color: var(--BGColor);
+    text-align: center;
+    min-height: 100vh;
+    min-width: 100vw;
+
+    #Btn-Sign-Out{
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        margin: auto;
+        color: rgb(245, 32, 32);;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid rgb(245, 32, 32);;
+        border-radius: 10px;
+
+        &:hover{
+            cursor: pointer;
+            background-color: rgb(245, 32, 32);
+            color: white,
+        }
+    }
+}
