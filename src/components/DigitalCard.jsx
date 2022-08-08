@@ -25,7 +25,7 @@ const DigitalCard = ({ userInfo }) => {
               {
                 userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
                 ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
-                : <img id = "Img-Profile" src={userInfo.imgUrl} alt="Profile Image" />
+                : <img id = "Img-Profile" src={userInfo.imgUrl} alt="pic" />
               }
             <h3>{userInfo.businessName}</h3>
           </div>
@@ -50,9 +50,10 @@ const DigitalCard = ({ userInfo }) => {
         </div>
         <div className="card-back">
           {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
-          <QRCode id = "qr-code" value={userInfo.website} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
-          <a>PHONE :- {userInfo.phone}</a><br />
-          <a>ABOUT:-{userInfo.about}</a>
+          {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
+          <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
+          <p>PHONE :- {userInfo.phone}</p><br />
+          <p>ABOUT:-{userInfo.about}</p>
         </div>
       </div>
     </div>
