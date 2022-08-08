@@ -10,9 +10,8 @@ import ProgressIndicator from '../components/ProgressIndicator';
 import { useParams } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
 import UploadImage from '../components/UploadImage';
+import {  FaShare,FaWhatsapp,FaEnvelopeOpen,  } from 'react-icons/fa';
 
-import { db } from '../firebase';
-import { doc,collection } from "firebase/firestore";
 
 const SpecificCard = () => {
     const [userInfo, setUserInfo] = useState({});
@@ -68,6 +67,8 @@ const SpecificCard = () => {
                             <DigitalCard userInfo={userInfo} />
                         </div>
             }
+            <FaWhatsapp className="icon" />
+
 
         </div>
     )
