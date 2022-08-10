@@ -2,8 +2,6 @@ import React,{useState} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
 import { FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
-import download from 'js-file-download';
-import axios from "axios";
 
 const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
