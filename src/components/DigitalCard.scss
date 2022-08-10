@@ -120,9 +120,12 @@
   .phone {
     padding-left: 30px;
   }
-  .phone a{
+  .phone p{
     text-decoration: none;
     color: white;
+  }
+  .phone p:hover {
+    cursor: pointer;
   }
   
   .email {

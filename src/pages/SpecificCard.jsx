@@ -67,7 +67,7 @@ const SpecificCard = () => {
                             <DigitalCard userInfo={userInfo} />
                         </div>
             }
-            <FaWhatsapp className="icon" />
+            {/* <FaWhatsapp className="icon" /> */}
 
 
         </div>
