@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
 import { FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
+import download from 'js-file-download';
+import axios from "axios";
 
 const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
@@ -14,6 +16,35 @@ const DigitalCard = ({ userInfo }) => {
     }else{
       document.getElementsByClassName('card')[0].style.transform = 'rotateY(0deg)';
     }
+  }
+
+  const handlePhoneClick =async()=>{
+    const body = {
+      "uid": userInfo.uid,
+      "firstName" : userInfo.firstName,
+      "lastName": userInfo.lastName,
+      "organisation": userInfo.businessName,
+      "phone":userInfo.mobile,
+      "workPhone":userInfo.phone,
+      "email":userInfo.email,
+      "url":userInfo.url
+    }
+
+    fetch("https://vcf-generator.herokuapp.com/vcf/generate-vcf", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }) // FETCH BLOB 
+      .then((response) => response.blob())
+      .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
+        var _url = window.URL.createObjectURL(blob);
+        window.open(_url, "_blank").focus(); // window.open + focus
+      }).catch((err) => {
+        alert(err);
+        console.log(err);
+      });
   }
   
   return (
@@ -36,7 +67,8 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="phone right-content">
               <FaPhoneAlt className="icon" />
-              <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
+              <p onClick={handlePhoneClick}>{userInfo.mobile}</p>
+              {/* <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a> */}
             </div>
             <div className="email right-content">
               <FaEnvelopeOpen className="icon" />
