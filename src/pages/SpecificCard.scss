@@ -9,18 +9,24 @@
         top: 12px;
         right: 12px;
         margin: auto;
-        color: rgb(245, 32, 32);;
+        color: #E5222F;
         padding: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 3px solid rgb(245, 32, 32);;
+        border: 3px solid #E5222F;
         border-radius: 10px;
 
         &:hover{
             cursor: pointer;
-            background-color: rgb(245, 32, 32);
+            background-color: #E5222F;
             color: white,
         }
+    }
+
+    #Whatsapp{
+        position: absolute;
+        bottom: 100px;
+        right: 12px;
     }
 }

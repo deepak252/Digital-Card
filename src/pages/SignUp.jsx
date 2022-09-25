@@ -1,21 +1,21 @@
 import React,{useState,useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import "./SignUp.scss";
-// import FirebaseAuthService from '../services/FirebaseAuthService';
 import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
 import { signUpUsingEmailPassword } from '../services/firebaseAuthService';
 import { Link } from 'react-router-dom';
 import ProgressIndicator from '../components/ProgressIndicator';
-// import { db } from '../firebase';
-// import { doc, collection } from "firebase/firestore";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const SignUp = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, watch, formState:{errors}} = useForm();
     const [user,loadingAuthState, error] = useAuthState(auth);
     const [isLoading, setLoading] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
 
     const onSubmit = async (data) =>{
@@ -36,14 +36,18 @@ const SignUp = () => {
         setLoading(false);        
     }
 
+    const togglePasswordVisility=()=>{
+        setPasswordVisible(!passwordVisible);
+    }
+
     useEffect(() => {
         setLoading(true);  
         // console.log("Current user = ",user);
-        console.log("Loading = ", loadingAuthState);
+        // console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            console.log("User is signed in");
+            // console.log("User is signed in");
             return navigate("/");
         }
         setLoading(false);  
@@ -125,7 +129,7 @@ const SignUp = () => {
                     <div className="Field">
                         <input 
                             type="number" 
-                            placeholder="Mobile Number*"
+                            placeholder="Contact Number*"
                             {
                                 ...register("mobile",{
                                     required : true,
@@ -133,8 +137,8 @@ const SignUp = () => {
                                 })
                             }
                         />
-                        {errors.mobile && errors.mobile.type==="required" && <span className="Error">Mobile number is required</span>}
-                        {errors.mobile && errors.mobile.type==="pattern" && <span className="Error">Invalid mobile number</span>}
+                        {errors.mobile && errors.mobile.type==="required" && <span className="Error">Contact number is required</span>}
+                        {errors.mobile && errors.mobile.type==="pattern" && <span className="Error">Invalid contact number</span>}
                     
                     </div>
 
@@ -172,7 +176,7 @@ const SignUp = () => {
                     </div>
 
                     {/* PHONE NUMBER (LANDLINE)*/}
-                    <div className="Field">
+                    {/* <div className="Field">
                         <input 
                             type="number" 
                             placeholder="Phone Number*"
@@ -186,7 +190,7 @@ const SignUp = () => {
                         {errors.phone && errors.phone.type === "required" && <span className="Error">Phone number is required</span>}
                         {errors.phone && errors.phone.type==="pattern" && <span className="Error">Invalid phone number</span>}
                     
-                    </div>
+                    </div> */}
 
                     {/* WEBSITE URL*/}
                     <div className="Field">
@@ -222,21 +226,33 @@ const SignUp = () => {
 
                     {/* PASSWORD */}
                     <div className="Field">
-                        <input 
-                            type="password" 
-                            placeholder="Password*"
-                            {
-                                ...register("password",{
-                                    required : true,
-                                    minLength: 6,
-                                    validate : ()=>{
-                                        if(watch("password").trim().length<6){
-                                            return false;
+                        <div className="Input-Password">
+                            <input 
+                                type= {passwordVisible ? "text":"password" } 
+                                placeholder="Password*"
+                                {
+                                    ...register("password",{
+                                        required : true,
+                                        minLength: 6,
+                                        validate : ()=>{
+                                            if(watch("password").trim().length<6){
+                                                return false;
+                                            }
                                         }
-                                    }
-                                })
-                            }
-                        />
+                                    })
+                                }
+                                
+                            />
+                            <span className="Visibiliy-Icon" onClick={togglePasswordVisility}>
+                                {
+                                    passwordVisible
+                                    ? <FaEyeSlash size="20" color='grey'/>
+                                    : <FaEye size="20" color='grey'/>
+
+                                }
+                            </span>
+                                
+                        </div>
                         {errors.password && errors.password.type==="required" && <span className="Error">Password can't be empty</span>}
                         {errors.password && errors.password.type==="validate" && <span className="Error">Password should not contain spaces</span>}
                         {errors.password && errors.password.type==="minLength" && <span className="Error">At least 6 characters required</span>}
@@ -244,22 +260,31 @@ const SignUp = () => {
 
                     {/* CONFIRM PASSWORD */}
                     <div className="Field">
-                        <input 
-                            type="password" 
-                            placeholder="Confirm Password*"
-                            {
-                                ...register("confirmPassword",{
-                                    // required : true,
-                                    validate:()=>{
-                                        if(watch("password")!==watch("confirmPassword")){
-                                            return false;                                        
+                        <div className="Input-Password">
+                            <input 
+                                type= {passwordVisible ? "text":"password" }
+                                placeholder="Confirm Password*"
+                                {
+                                    ...register("confirmPassword",{
+                                        // required : true,
+                                        validate:()=>{
+                                            if(watch("password")!==watch("confirmPassword")){
+                                                return false;                                        
+                                            }
                                         }
-                                    }
-                                })
-                        
-                            }
+                                    })
                             
-                        />
+                                }
+                            />
+                            <span className="Visibiliy-Icon" onClick={togglePasswordVisility}>
+                                {
+                                    passwordVisible
+                                    ? <FaEyeSlash size="20" color='grey'/>
+                                    : <FaEye size="20" color='grey'/>
+
+                                }
+                            </span>
+                        </div>
                         {errors.confirmPassword && errors.confirmPassword.type==="validate" && <span className="Error">Password not match</span>}
                     </div>
                     <input className="Btn-Submit" type="submit" value="Create Account" />

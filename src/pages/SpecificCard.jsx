@@ -60,6 +60,9 @@ const SpecificCard = () => {
                                 {/* Sign Out Button */}
                                 <button onClick={async () => { await signOutUser(); return navigate("/"); }} id="Btn-Sign-Out" >SIGN OUT <FaSignOutAlt size="25" style={{ marginLeft: "10px" }} /></button>
                                 {/* Upload Image Button Component */}
+                            <a id="Whatsapp" target='blank' href={`https://api.whatsapp.com/send?text=Hey,%20checkout%20my%20business%20card%20${window.location.href}`}>
+                                    <FaWhatsapp size="55" color='green'/>
+                                </a>
                                 <UploadImage userInfo={userInfo} />
                             </div>
                         : <div>

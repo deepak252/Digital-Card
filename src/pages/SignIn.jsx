@@ -7,12 +7,16 @@ import { useNavigate } from 'react-router';
 import { signInUsingEmailPassword } from '../services/firebaseAuthService';
 import { Link } from 'react-router-dom';
 import ProgressIndicator from '../components/ProgressIndicator';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const SignIn = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [user,loadingAuthState, error] = useAuthState(auth);
     const [isLoading, setLoading] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
     const onSubmit = async (data) =>{        
         setLoading(true);
         await signInUsingEmailPassword(data.email,data.password);
@@ -20,15 +24,17 @@ const SignIn = () => {
         
         
     }
+    const togglePasswordVisility = () => {
+        setPasswordVisible(!passwordVisible);
+    }
     
     useEffect(() => {
         setLoading(true);
         // console.log("Current user = ",user);
-        console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            console.log("User is signed in");
+            // console.log("User is signed in");
             return navigate("/");
         }
         setLoading(false);
@@ -63,15 +69,25 @@ const SignIn = () => {
                 
                     {/* PASSWORD */}
                     <div className="Field">
-                        <input 
-                            type="password" 
-                            placeholder="Enter password"
-                            {
-                                ...register("password",{
-                                    required : true,
-                                })
-                            }
-                        />
+                        <div className="Input-Password">
+                            <input 
+                                type= {passwordVisible ? "text":"password" }
+                                placeholder="Enter password"
+                                {
+                                    ...register("password",{
+                                        required : true,
+                                    })
+                                }
+                            />
+                            <span className="Visibiliy-Icon" onClick={togglePasswordVisility}>
+                                {
+                                    passwordVisible
+                                    ? <FaEyeSlash size="20" color='grey'/>
+                                    : <FaEye size="20" color='grey'/>
+
+                                }
+                            </span>
+                        </div>
                         {errors.password && errors.password.type==="required" && <span className="Error">Password can't be empty</span>}
                     </div>
                     
