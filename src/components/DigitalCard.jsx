@@ -7,6 +7,7 @@ const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
 
   const rotateCard=()=>{
+    console.log("Rotate");
     updateRotated(!isRotated);
 
     if(!isRotated){
@@ -16,33 +17,44 @@ const DigitalCard = ({ userInfo }) => {
     }
   }
 
-  const handlePhoneClick =async()=>{
+  const handlePhoneClick =async(attempt)=>{
+    if(attempt>2)
+      return false;
     const body = {
       "uid": userInfo.uid,
       "firstName" : userInfo.firstName,
       "lastName": userInfo.lastName,
       "organisation": userInfo.businessName,
       "phone":userInfo.mobile,
-      "workPhone":userInfo.phone,
+      "workPhone":userInfo.mobile,
       "email":userInfo.email,
       "url":userInfo.url
     }
 
-    fetch("https://vcf-generator.herokuapp.com/vcf/generate-vcf", {
+    return fetch("https://vcf-generator.herokuapp.com/vcf/generate-vcf", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
-    }) // FETCH BLOB 
+    })  // FETCH BLOB
       .then((response) => response.blob())
       .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
         var _url = window.URL.createObjectURL(blob);
-        window.open(_url, "_blank").focus(); // window.open + focus
-      }).catch((err) => {
-        alert(err);
+        window.open(_url, "_blank"); // window.open + focus
+        return true;
+      }).catch(async (err) => {
+        attempt++;
+        var retry = await handlePhoneClick(attempt);
+        console.log("Attempt = ", attempt, retry);
+        if(attempt===3 && retry===false){
+          alert("Something went wrong! Try again later.");
+        }
         console.log(err);
+        return false;
+
       });
+
   }
   
   return (
@@ -56,16 +68,16 @@ const DigitalCard = ({ userInfo }) => {
                 ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
                 : <img id = "Img-Profile" src={userInfo.imgUrl} alt="pic" />
               }
-            <h3>{userInfo.businessName}</h3>
+            <h3 id="business-name">{userInfo.businessName}</h3>
           </div>
           <div className="right">
             <div className="person right-content">
               <FaUserTie  className="icon" />
-                <h4>{userInfo.firstName} {userInfo.lastName}</h4>
+              <h4>{userInfo.firstName} {userInfo.lastName} sdf sdf </h4>
             </div>
             <div className="phone right-content">
               <FaPhoneAlt className="icon" />
-              <p onClick={handlePhoneClick}>{userInfo.mobile}</p>
+              <p onClick={()=>handlePhoneClick(1)}>{userInfo.mobile}</p>
               {/* <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a> */}
             </div>
             <div className="email right-content">
@@ -74,7 +86,7 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
-                <p>{userInfo.address}</p>
+              <p>{userInfo.address}</p>
             </div>
           </div>
         </div>
@@ -82,7 +94,8 @@ const DigitalCard = ({ userInfo }) => {
           {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
           {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
           <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
-          <p>PHONE :- {userInfo.phone}</p><br />
+          
+          <p>PHONE :- {userInfo.mobile}</p><br />
           <p>ABOUT:-{userInfo.about}</p>
         </div>
       </div>

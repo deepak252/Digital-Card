@@ -13,7 +13,7 @@
     .Form{
         box-sizing: border-box;
         margin: 10vh 0;
-        padding: 50px;
+        padding: 40px;
         background-color: white;
         max-width: 400px;
         width: 90%;
@@ -37,6 +37,20 @@
 
                 &:invalid{
                     border: 2px solid red;
+                }
+            }
+            .Input-Password{
+                margin: 8px 0 4px;
+                display: flex;
+                align-items: center;
+                border: 1px solid gray;
+                input{
+                    flex-grow: 1;
+                    border: none;
+                    margin: 0;
+                }
+                .Visibiliy-Icon{
+                    padding: 0 6px;
                 }
             }
 
