@@ -190,6 +190,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #save-contact{
+      margin-bottom: 12px;
+      color: #3D277B;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid #3D277B;
+      border-radius: 10px;
+      
+      &:hover {
+        cursor: pointer;
+        background-color: #3D277B;
+        color: white,
+      }
+    }
   }
 
   .card-back #qr-code{

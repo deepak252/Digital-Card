@@ -73,7 +73,7 @@ const DigitalCard = ({ userInfo }) => {
           <div className="right">
             <div className="person right-content">
               <FaUserTie  className="icon" />
-              <h4>{userInfo.firstName} {userInfo.lastName} sdf sdf </h4>
+              <h4>{userInfo.firstName} {userInfo.lastName}</h4>
             </div>
             <div className="phone right-content">
               <FaPhoneAlt className="icon" />
@@ -94,7 +94,7 @@ const DigitalCard = ({ userInfo }) => {
           {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
           {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
           <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
-          
+          <button onClick={() => handlePhoneClick(1)}  id="save-contact">Save Contact</button>
           <p>PHONE :- {userInfo.mobile}</p><br />
           <p>ABOUT:-{userInfo.about}</p>
         </div>
