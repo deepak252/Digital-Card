@@ -30,8 +30,8 @@ const DigitalCard = ({ userInfo }) => {
       "email":userInfo.email,
       "url":userInfo.url
     }
-
-    return fetch("https://vcf-generator.herokuapp.com/vcf/generate-vcf", {
+    // https://vcf-generator.herokuapp.com //Old Url
+    return fetch("https://dgtlcard-vcard-generator.glitch.me/vcf/generate-vcf", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
