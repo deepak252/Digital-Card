@@ -146,38 +146,37 @@
   
   .phone {
     padding-left: 20px;
-  }
-  .phone p{
-    text-decoration: none;
-    color: white;
-  }
-  .phone p:hover {
-    cursor: pointer;
+    p,a{
+      text-decoration: none;
+      color: white;
+    }
   }
   
   .email {
     padding-left: 10px;
     font-size:14px;
-    
-  }
-  .email a{
-    text-decoration: none;
-    color: white;
-    // overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   display: -webkit-box;
-    //   -webkit-line-clamp: 1;
-    //   -webkit-box-orient: vertical;
+
+    a{
+      text-decoration: none;
+      color: white;
+      // overflow: hidden;
+      //   text-overflow: ellipsis;
+      //   display: -webkit-box;
+      //   -webkit-line-clamp: 1;
+      //   -webkit-box-orient: vertical;
+    }
   }
   
   .address {
     padding-left: 0px;
-    p{
+    p, a{
+      text-decoration: none;
+      color: white;
       overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
   
@@ -206,6 +205,11 @@
         background-color: #3D277B;
         color: white,
       }
+    }
+
+    a{
+      text-decoration: none;
+      color: black;
     }
   }
 

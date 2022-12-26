@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
 import { FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
@@ -56,6 +56,33 @@ const DigitalCard = ({ userInfo }) => {
       });
 
   }
+
+  useEffect(() => {
+    let title = "Digital Card"
+    if(userInfo.firstName){
+      title = userInfo.firstName;
+      if(userInfo.lastName){
+        title = title+ " "+ userInfo.lastName
+      }
+    }
+    document.title = title
+
+    if(userInfo.imgUrl){
+      var link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = userInfo.imgUrl;
+    }
+
+    if (userInfo.about) {
+      document.querySelector('meta[name="description"]').setAttribute('content',userInfo.about);
+    }
+
+  }, []);
+
   
   return (
     <div onDoubleClick={rotateCard}  className="card-wrapper">
@@ -77,8 +104,8 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="phone right-content">
               <FaPhoneAlt className="icon" />
-              <p onClick={()=>handlePhoneClick(1)}>{userInfo.mobile}</p>
-              {/* <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a> */}
+              {/* <p onClick={()=>handlePhoneClick(1)}>{userInfo.mobile}</p> */}
+              <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
             </div>
             <div className="email right-content">
               <FaEnvelopeOpen className="icon" />
@@ -86,8 +113,9 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
-              <p>{userInfo.address}</p>
+              <a href={"http://maps.google.com/?q="+userInfo.address} target ="blank">{userInfo.address}</a>
             </div>
+            
           </div>
         </div>
         <div className="card-back">
@@ -95,7 +123,9 @@ const DigitalCard = ({ userInfo }) => {
           {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
           <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
           <button onClick={() => handlePhoneClick(1)}  id="save-contact">Save Contact</button>
-          <p>PHONE :- {userInfo.mobile}</p><br />
+          <br />
+          <a href={"tel:" + userInfo.mobile}>PHONE :- {userInfo.mobile}</a>
+          <br />
           <p>ABOUT:-{userInfo.about}</p>
         </div>
       </div>
