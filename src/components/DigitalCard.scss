@@ -109,15 +109,15 @@
   .right-content {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 14px 0;
     overflow: hidden;
     word-break: break-all;
   }
   
   .person {
     background-color: #E67B47;
-    padding: 5px 0 5px 25px;
-    margin: 30px 0;
+    padding: 5px 0 5px 30px;
+    margin: 20px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
   
@@ -145,7 +145,7 @@
   }
   
   .phone {
-    padding-left: 20px;
+    padding-left: 30px;
     p,a{
       text-decoration: none;
       color: white;
@@ -153,9 +153,7 @@
   }
   
   .email {
-    padding-left: 10px;
-    font-size:14px;
-
+    padding-left: 20px;
     a{
       text-decoration: none;
       color: white;
@@ -164,6 +162,19 @@
       //   display: -webkit-box;
       //   -webkit-line-clamp: 1;
       //   -webkit-box-orient: vertical;
+    }
+  }
+
+  .website {
+    padding-left: 10px;
+    p, a{
+      text-decoration: none;
+      color: white;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
   
@@ -245,6 +256,10 @@
   }
   
   .address {
+    font-size: 13px;
+  }
+
+  .website {
     font-size: 13px;
   }
   
