@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
-import { FaImage, FaUserTie, FaPhoneAlt, FaEnvelopeOpen, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaImage, FaUserTie, FaPhoneAlt,FaLink, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
@@ -108,8 +108,12 @@ const DigitalCard = ({ userInfo }) => {
               <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
             </div>
             <div className="email right-content">
-              <FaEnvelopeOpen className="icon" />
+              <FaEnvelope className="icon" />
               <a href={"mailto:" +userInfo.email}>{userInfo.email}</a>
+            </div>
+            <div className="website right-content">
+              <FaLink className="icon" />
+              <a href={userInfo.url} target="blank">{userInfo.url ? userInfo.url : "NO URL"}</a>
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
