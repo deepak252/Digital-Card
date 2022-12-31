@@ -28,7 +28,7 @@ const DigitalCard = ({ userInfo }) => {
       "phone":userInfo.mobile,
       "workPhone":userInfo.mobile,
       "email":userInfo.email,
-      "url":userInfo.url
+      "url":userInfo.website
     }
     // https://vcf-generator.herokuapp.com //Old Url
     return fetch("https://dgtlcard-vcard-generator.glitch.me/vcf/generate-vcf", {
@@ -113,7 +113,7 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="website right-content">
               <FaLink className="icon" />
-              <a href={userInfo.url} target="blank">{userInfo.url ? userInfo.url : "NO URL"}</a>
+              <a href={userInfo.website} target="blank">{userInfo.website ? userInfo.website : "NO URL"}</a>
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
