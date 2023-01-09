@@ -1,8 +1,7 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
 import { FaImage, FaUserTie, FaPhoneAlt,FaLink, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import { Helmet } from 'react-helmet';
 
 const DigitalCard = ({ userInfo }) => {
   const [isRotated,updateRotated] = useState(false);
@@ -58,14 +57,31 @@ const DigitalCard = ({ userInfo }) => {
 
   }
 
+  useEffect(() => {
+    let title = "Digital Visiting Card"
+    if(userInfo.firstName){
+      title = userInfo.firstName;
+      if(userInfo.lastName){
+        title = title+ " - Digital Visiting Card"
+      }
+    }
+    document.title = title
+
+    if(userInfo.imgUrl){
+      var link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = userInfo.imgUrl;
+    }
+
+  }, []);
+
   
   return (
     <div onDoubleClick={rotateCard}  className="card-wrapper">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Digital Visting Card</title>
-        <meta name="description" content="Digitize your Business Card" />
-      </Helmet>
       <div  className="card">
         <div className="card-front">
           <div className="left">

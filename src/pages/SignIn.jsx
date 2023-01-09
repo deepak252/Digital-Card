@@ -30,6 +30,10 @@ const SignIn = () => {
     
     useEffect(() => {
         setLoading(true);
+        
+        document.title = "Signin - Digital Visiting Card"
+        
+        
         // console.log("Current user = ",user);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page

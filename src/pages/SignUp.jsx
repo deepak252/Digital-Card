@@ -41,7 +41,8 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        setLoading(true);  
+        setLoading(true); 
+        document.title = "Signup - Digital Visiting Card" 
         // console.log("Current user = ",user);
         // console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
