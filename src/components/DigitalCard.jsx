@@ -67,15 +67,15 @@ const DigitalCard = ({ userInfo }) => {
     }
     document.title = title
 
-    if(userInfo.imgUrl){
-      var link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.getElementsByTagName('head')[0].appendChild(link);
-      }
-      link.href = userInfo.imgUrl;
-    }
+    // if(userInfo.imgUrl){
+    //   var link = document.querySelector("link[rel~='icon']");
+    //   if (!link) {
+    //     link = document.createElement('link');
+    //     link.rel = 'icon';
+    //     document.getElementsByTagName('head')[0].appendChild(link);
+    //   }
+    //   link.href = userInfo.imgUrl;
+    // }
 
   }, []);
 
