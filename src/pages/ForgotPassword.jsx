@@ -22,8 +22,9 @@ const ForgotPassword = () => {
     
     useEffect(() => {
         setLoading(true);
+        document.title = "Forget Password - Digital Visiting Card" 
         // console.log("Current user = ",user);
-        console.log("Loading = ", loadingAuthState);
+        // console.log("Loading = ", loadingAuthState);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
