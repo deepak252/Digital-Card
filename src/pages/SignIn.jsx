@@ -40,7 +40,6 @@ const SignIn = () => {
         if (user){
             if(!user.emailVerified){
                 sendEmailVerificationLink(user)
-                alert(`Email verification link sent to ${user.email}`)
             }else{
                 console.log("Email verified");
                 return navigate("/");

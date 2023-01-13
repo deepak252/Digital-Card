@@ -50,7 +50,7 @@ const SignUp = () => {
         if (user){
             if(!user.emailVerified){
                 sendEmailVerificationLink(user)
-                alert(`Email verification link sent to ${user.email}`)
+                
             }else{
                 // console.log("User is signed in");
                 return navigate("/");
