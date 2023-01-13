@@ -65,7 +65,14 @@ const resetPasswordUsingEmail = async (email) => {
 }
 
 const sendEmailVerificationLink = (user)=>{
-    sendEmailVerification(user,actionCodeSettings);
+    sendEmailVerification(user,actionCodeSettings)
+    .then((res)=>{
+        alert(`Email verification link sent to ${user.email}`)
+    })
+    .catch((e)=>{
+        console.log("sendEmailVerificationLink error ", e.message);
+        alert(emailAuthException(e.code));
+    })
 
 }
 
