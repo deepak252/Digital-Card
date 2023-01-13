@@ -1,11 +1,22 @@
 import { auth } from "../firebase";
 import { db } from "../firebase";
-import {signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,sendPasswordResetEmail} from "firebase/auth";
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,sendPasswordResetEmail,sendEmailVerification} from "firebase/auth";
 import {doc,setDoc,getDoc} from "firebase/firestore";
 
 
+const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: `${window.location.origin}/signin`,
+    // This must be true.
+    handleCodeInApp: true,
+   
+};
+  
+
 const signInUsingEmailPassword = async (email,password) =>{
     try{
+        
         await signInWithEmailAndPassword(auth,email,password);
         console.log("Signed in successfully");
     }catch(e){
@@ -13,6 +24,32 @@ const signInUsingEmailPassword = async (email,password) =>{
         alert(emailAuthException(e.code));
     }
 }
+
+
+const signUpUsingEmailPassword = async (data) =>{
+    try{
+        const {password,confirmPassword, ...userData} = data;
+        console.log({...userData});
+        const userCreds = await createUserWithEmailAndPassword(auth,data.email,password);
+        
+        console.log("Account created successfully...");
+        
+        // Add user data to firestore "users" collection
+        let user = userCreds.user;
+        const userDocRef = doc(db,"users",user.uid);
+        await setDoc(userDocRef,{
+            uid: user.uid,
+            ...userData
+
+        },{merge: true});
+        console.log("Userdata added to firestore");
+
+    }catch(e){
+        console.log("signUpUsingEmailPassword error ", e.message);
+        alert(emailAuthException(e.code));
+    }
+}
+
 
 const resetPasswordUsingEmail = async (email) => {
     try {
@@ -27,27 +64,9 @@ const resetPasswordUsingEmail = async (email) => {
     }
 }
 
-const signUpUsingEmailPassword = async (data) =>{
-    try{
-        const {password,confirmPassword, ...userData} = data;
-        console.log({...userData});
-        const res = await createUserWithEmailAndPassword(auth,data.email,password);
-        console.log("Account created successfully...");
-        
-        // Add user data to firestore "users" collection
-        let user = res.user;
-        const userDocRef = doc(db,"users",user.uid);
-        await setDoc(userDocRef,{
-            uid: user.uid,
-            ...userData
+const sendEmailVerificationLink = (user)=>{
+    sendEmailVerification(user,actionCodeSettings);
 
-        },{merge: true});
-        console.log("Userdata added to firestore");
-
-    }catch(e){
-        console.log("signUpUsingEmailPassword error ", e.message);
-        alert(emailAuthException(e.code));
-    }
 }
 
 const signOutUser = async () =>{
@@ -102,8 +121,17 @@ export {
     signInUsingEmailPassword, 
     signUpUsingEmailPassword, 
     resetPasswordUsingEmail,
+    sendEmailVerificationLink,
     signOutUser,
     getUserData
 };
 
+// let otp = prompt("Enter OTP sent to phone number");
+        // while(otp!=null){
+        //     if(otp.trim().length!==4 || !(/\d/.test(otp))){
+        //         alert("Invalid OTP")
+        //         otp = prompt("Enter OTP sent to phone number");
+        //     }else{
 
+        //     }
+        // }

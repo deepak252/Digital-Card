@@ -4,7 +4,7 @@ import "./SignUp.scss";
 import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
-import { signUpUsingEmailPassword } from '../services/firebaseAuthService';
+import { signUpUsingEmailPassword,sendEmailVerificationLink } from '../services/firebaseAuthService';
 import { Link } from 'react-router-dom';
 import ProgressIndicator from '../components/ProgressIndicator';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -22,7 +22,7 @@ const SignUp = () => {
         // const collectionRef=collection(db,"temp");
         // const docRef=doc(collectionRef);  //generating random document id
         // console.log(docref.id);
-        
+
         setLoading(true);        
         await signUpUsingEmailPassword({
             ...data,
@@ -48,8 +48,13 @@ const SignUp = () => {
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            // console.log("User is signed in");
-            return navigate("/");
+            if(!user.emailVerified){
+                sendEmailVerificationLink(user)
+                alert(`Email verification link sent to ${user.email}`)
+            }else{
+                // console.log("User is signed in");
+                return navigate("/");
+            }
         }
         setLoading(false);  
     }, [user, loadingAuthState]);
@@ -288,6 +293,7 @@ const SignUp = () => {
                         </div>
                         {errors.confirmPassword && errors.confirmPassword.type==="validate" && <span className="Error">Password not match</span>}
                     </div>
+                    <div id="recaptcha-container"></div>
                     <input className="Btn-Submit" type="submit" value="Create Account" />
 
                     <p style={{textAlign:"center"}}>
