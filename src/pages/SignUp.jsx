@@ -48,13 +48,14 @@ const SignUp = () => {
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            if(!user.emailVerified){
-                sendEmailVerificationLink(user)
+            // if(!user.emailVerified){
+            //     sendEmailVerificationLink(user)
                 
-            }else{
-                // console.log("User is signed in");
-                return navigate("/");
-            }
+            // }else{
+            //     // console.log("User is signed in");
+            //     return navigate("/");
+            // }
+            return navigate("/");
         }
         setLoading(false);  
     }, [user, loadingAuthState]);

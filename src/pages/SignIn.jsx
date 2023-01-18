@@ -38,13 +38,13 @@ const SignIn = () => {
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            if(!user.emailVerified){
-                sendEmailVerificationLink(user)
-            }else{
-                console.log("Email verified");
-                return navigate("/");
-            }
-            // return navigate("/");
+            // if(!user.emailVerified){
+            //     sendEmailVerificationLink(user)
+            // }else{
+            //     console.log("Email verified");
+            //     return navigate("/");
+            // }
+            return navigate("/");
         }
         setLoading(false);
     }, [user, loadingAuthState]);
@@ -102,7 +102,6 @@ const SignIn = () => {
                     
                         <Link id="forgot-password" to="/forgot-password">Forgot Password?</Link>
 
-                    <div id="recaptcha-container"></div>
                     <input className="Btn-Submit" type="submit" value="Log In" />
                     <p style={{textAlign:"center"}}>
                         Don't have an account?<br/> <Link to="/signup">Create New Account</Link> now.
