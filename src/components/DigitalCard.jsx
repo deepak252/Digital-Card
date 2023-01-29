@@ -57,6 +57,15 @@ const DigitalCard = ({ userInfo }) => {
 
   }
 
+  const getClickableLink = link => {
+    if(!link){
+      return ''
+    }
+    return link.startsWith("http://") || link.startsWith("https://") ?
+      link
+      : `http://${link}`;
+  };
+
   useEffect(() => {
     let title = "Digital Visiting Card"
     if(userInfo.firstName){
@@ -109,7 +118,7 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             <div className="website right-content">
               <FaLink className="icon" />
-              <a href={userInfo.website} target="blank">{userInfo.website ? userInfo.website : "NO URL"}</a>
+              <a href={getClickableLink(userInfo.website)} target="blank">{userInfo.website ? userInfo.website : "NO URL"}</a>
             </div>
             <div className="address right-content">
               <FaMapMarkerAlt className="icon" />
