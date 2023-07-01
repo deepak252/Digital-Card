@@ -24,7 +24,7 @@
   
   .card {
     max-width: 96vw;
-    width: 550px;
+    width: 600px;
     // height: 300px;
     background-color: #fff;
     transform-style: preserve-3d;
@@ -33,27 +33,15 @@
     border-radius: 15px;
     transition: transform 1s;
   }
-  //Rotate card
-  // .card-wrapper:hover .card {
-  //   transform: rotateY(180deg);
-  // }
   
-  .card-front,
-  .card-back {
+  
+  .card-top {
+    display: flex;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: inherit;
-    
-  }
-  
-  .card-front {
-    display: flex;
-    // background: linear-gradient(
-    //   100deg,
-    //   white 40%,
-    //   #3D277 0,
-    // );
+    // border-radius: inherit;
+    border-radius: 15px 15px 0 0;
     background: linear-gradient(
       100deg, 
       #FFFFFF 40%,
@@ -63,8 +51,63 @@
       #3D277B
       );
   }
+
+
+  .card-bottom {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    // border-radius: inherit;
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(
+      80deg, 
+      #FFFFFF 40%,
+      #E67B47 0,
+      #E5222F , 
+      #E61B7B, 
+      #3D277B
+      );
+  }
+
+  .card-bottom-left{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0;
+  }
+
+  .card-bottom-right{
+    // width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+
+    p{
+      color: white;
+    }
+  }
+
+  #save-contact{
+    margin-bottom: 12px;
+    color: #3D277B;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #3D277B;
+    border-radius: 10px;
+    
+    &:hover {
+      cursor: pointer;
+      background-color: #3D277B;
+      color: white,
+    }
+  }
   
-  .left {
+  .card-top-left {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -87,21 +130,21 @@
     
   }
   
-  .left img {
+  .card-top-left img {
     width: 80%;
   }
   
-  .left h4 {
+  .lefcard-top-left h4 {
     margin: 10px;
     letter-spacing: 1px;
   }
   
-  .left span {
+  .card-top-left span {
     text-transform: uppercase;
     color: #F2B944;
   }
   
-  .right {
+  .card-top-right {
     width: 60%;
     color: #fff;
   }
@@ -230,7 +273,7 @@
   }
 
 @media screen and (max-width:600px) {
-  .left {
+  .card-top-left {
     img{
       width: 80%;
       height: 40%;

@@ -4,58 +4,32 @@ import QRCode from "qrcode.react";
 import { FaImage, FaUserTie, FaPhoneAlt,FaLink, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DigitalCard = ({ userInfo }) => {
-  const [isRotated,updateRotated] = useState(false);
 
-  const rotateCard=()=>{
-    console.log("Rotate");
-    updateRotated(!isRotated);
-
-    if(!isRotated){
-      document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
-    }else{
-      document.getElementsByClassName('card')[0].style.transform = 'rotateY(0deg)';
-    }
+  const saveContact=()=>{
+    var vcard = generateVCardData(userInfo)
+    var blob = new Blob([vcard], { type: "text/vcard" });
+    var url = URL.createObjectURL(blob);
+    
+    const newLink = document.createElement('a');
+    newLink.download = `${userInfo.firstName}_${userInfo.lastName}.vcf`;
+    newLink.textContent = userInfo.firstName;
+    newLink.href = url;
+    
+    newLink.click();
   }
 
-  const handlePhoneClick =async(attempt)=>{
-    if(attempt>2)
-      return false;
-    const body = {
-      "uid": userInfo.uid,
-      "firstName" : userInfo.firstName,
-      "lastName": userInfo.lastName,
-      "organisation": userInfo.businessName,
-      "phone":userInfo.mobile,
-      "workPhone":userInfo.mobile,
-      "email":userInfo.email,
-      "url":userInfo.website
-    }
-    // https://vcf-generator.herokuapp.com //Old Url
-    return fetch("https://dgtlcard-vcard-generator.glitch.me/vcf/generate-vcf", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })  // FETCH BLOB
-      .then((response) => response.blob())
-      .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
-        var _url = window.URL.createObjectURL(blob);
-        window.open(_url, "_blank"); // window.open + focus
-        return true;
-      }).catch(async (err) => {
-        attempt++;
-        var retry = await handlePhoneClick(attempt);
-        console.log("Attempt = ", attempt, retry);
-        if(attempt===3 && retry===false){
-          alert("Something went wrong! Try again later.");
-        }
-        console.log(err);
-        return false;
-
-      });
-
-  }
+  const generateVCardData = (userInfo) => {
+    // Construct the vCard data using the contact details
+    return `BEGIN:VCARD
+VERSION:4.0
+FN:${userInfo.firstName} ${userInfo.lastName}
+TEL;TYPE=work,voice:${userInfo.mobile}
+EMAIL:${userInfo.email}
+ORG:${userInfo.businessName}
+URL:${userInfo.website}
+END:VCARD`;
+    return `BEGIN:VCARD\nVERSION:4.0\nFN:${userInfo.firstName} ${userInfo.lastName}\nTEL;TYPE=work,voice:${userInfo.mobile}\nEMAIL:${userInfo.email}\nORG:${userInfo.businessName}\nURL:${userInfo.website}\nEND:VCARD`;
+  };
 
   const getClickableLink = link => {
     if(!link){
@@ -90,10 +64,10 @@ const DigitalCard = ({ userInfo }) => {
 
   
   return (
-    <div onDoubleClick={rotateCard}  className="card-wrapper">
+    <div className="card-wrapper">
       <div  className="card">
-        <div className="card-front">
-          <div className="left">
+        <div className="card-top">
+          <div className="card-top-left">
           {/* userInfo.about */}
               {
                 userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
@@ -102,7 +76,7 @@ const DigitalCard = ({ userInfo }) => {
               }
             <h3 id="business-name">{userInfo.businessName}</h3>
           </div>
-          <div className="right">
+          <div className="card-top-right">
             <div className="person right-content">
               <FaUserTie  className="icon" />
               <h4>{userInfo.firstName} {userInfo.lastName}</h4>
@@ -126,16 +100,20 @@ const DigitalCard = ({ userInfo }) => {
             </div>
             
           </div>
+
         </div>
-        <div className="card-back">
-          {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
-          {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
-          <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
-          <button onClick={() => handlePhoneClick(1)}  id="save-contact">Save Contact</button>
-          <br />
-          <a href={"tel:" + userInfo.mobile}>PHONE :- {userInfo.mobile}</a>
-          <br />
-          <p>ABOUT:-{userInfo.about}</p>
+        <div className= "card-bottom">
+            <div className="card-bottom-left">
+              <QRCode 
+                id = "qr-code" 
+                value = { generateVCardData(userInfo) } 
+                style={{ marginBottom:"20px" , height: "100px", width: "100px" }}
+              />
+              <button onClick={() => saveContact()}  id="save-contact">Save Contact</button>
+            </div>
+            <div className='card-bottom-right'>
+              <p>ABOUT:  {userInfo.about}</p>
+            </div>
         </div>
       </div>
     </div>
