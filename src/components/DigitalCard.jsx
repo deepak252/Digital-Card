@@ -20,15 +20,18 @@ const DigitalCard = ({ userInfo }) => {
 
   const generateVCardData = (userInfo) => {
     // Construct the vCard data using the contact details
+    let {firstName="",lastName="",mobile="",email="",businessName="",website=""} = userInfo;
+    if(mobile.length===10||mobile.length===11){
+      mobile=`+91${mobile}`
+    }
     return `BEGIN:VCARD
 VERSION:4.0
-FN:${userInfo.firstName} ${userInfo.lastName}
-TEL;TYPE=work,voice:${userInfo.mobile}
-EMAIL:${userInfo.email}
-ORG:${userInfo.businessName}
-URL:${userInfo.website}
+FN:${firstName} ${lastName}
+TEL;TYPE=work,voice:${mobile}
+EMAIL:${email}
+ORG:${businessName}
+URL:${website}
 END:VCARD`;
-    return `BEGIN:VCARD\nVERSION:4.0\nFN:${userInfo.firstName} ${userInfo.lastName}\nTEL;TYPE=work,voice:${userInfo.mobile}\nEMAIL:${userInfo.email}\nORG:${userInfo.businessName}\nURL:${userInfo.website}\nEND:VCARD`;
   };
 
   const getClickableLink = link => {
