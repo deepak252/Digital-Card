@@ -1,3 +1,6 @@
+@import '../constants/common';
+@import '../constants/variables';
+
 // #F2B944
 // #E5222F
 // #E61B7B
@@ -34,12 +37,9 @@ body {
     }
     
     &__left{
+        @include flex-center;
         width: 40%;
         padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
 
         #img-profile{
             margin: 80px 0 0 0;
@@ -57,20 +57,8 @@ body {
         }
 
         #btn-contact{
+            @include outlined-button();
             margin-bottom: 12px;
-            color: #3D277B;
-            padding: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 3px solid #3D277B;
-            border-radius: 10px;
-            
-            &:hover {
-            cursor: pointer;
-            background-color: #3D277B;
-            color: white,
-            }
         }
     }
 
@@ -80,10 +68,10 @@ body {
         padding: 10px 0;
         background: linear-gradient(
             90deg, 
-            #E67B47 0,
+            $SECONDARY 0,
             #E5222F , 
             #E61B7B, 
-            #3D277B
+            $PRIMARY
         );
 
         &__item{
@@ -103,7 +91,7 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #E67B47;
+                background-color: $SECONDARY;
                 margin-right: 10px;
                 font-size: 12px;
                 color: white;
@@ -111,7 +99,7 @@ body {
         }
 
         .person {
-            background-color: #E67B47;
+            background-color: $SECONDARY;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             h4{
                 text-transform: uppercase;

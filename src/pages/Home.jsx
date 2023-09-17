@@ -1,55 +1,85 @@
-import React from 'react';
-import DigitalCard from '../components/DigitalCard';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import "./Home.scss";
-import {useEffect, useState} from "react";
-import { signOutUser, getUserData } from '../services/firebaseAuthService';
 import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import {  getUserData,signOutUser } from '../services/firebaseAuthService';
 import ProgressIndicator from '../components/ProgressIndicator';
 import { FaSignOutAlt } from 'react-icons/fa';
 import UploadImage from '../components/UploadImage';
+import {  FaWhatsapp, FaEdit  } from 'react-icons/fa';
+import DigitalCard from '../components/DigitalCard';
 
 const Home = () => {
-    const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({});
     const [isLoading, setLoading] = useState(false);
-    const [user,loadingAuthState, error] = useAuthState(auth);
-    
+    const [user,loadingAuthState] = useAuthState(auth);
 
-    useEffect(async () => {
+    
+    const params = useParams();
+    const userIdParam = params.userId?.trim();
+    const isCurrUser = user && user.uid === userIdParam;
+
+    useEffect( () => {
+        loadUserData();
+    }, [userIdParam, user, loadingAuthState]);
+
+    const loadUserData = async ()=>{
+        // findUser();
         setLoading(true);
-        // console.log("Current user = ",user);
         // if user not signed in, naviagate to SIGNIN page
         if (loadingAuthState) return;
-        if (!user){
-            console.log("User not signed in");
-            return navigate("/signin");
-        }else{
-            //Navigate to specific card page
-            return navigate(`/${user.uid}`);
+        if(!userIdParam){
+            if(!user){
+                return navigate("/signin");
+            }else{
+                return navigate(`/${user.uid}`);
+            }
         }
-        // const userData = await getUserData(user.uid);
-        // setUserInfo(userData);
-        // setLoading(false);
+        const userData = await getUserData(userIdParam);
+        if(!userData){
+            return navigate("/404");
+        }else{
+            setUserInfo(userData);
+        }
+        setLoading(false);
+    }
 
-    }, [user, loadingAuthState]);
+    const handleSignoutClick = async () =>{
+        await signOutUser(); 
+        return navigate("/signin"); 
+    }
+
     return (
         <div id="Home">
             {
                 isLoading
-                ? <ProgressIndicator />
-                : <div>
-                    {/* Digital Card Component */}
-                    <DigitalCard userInfo = {userInfo}/>
-                    {/* Sign Out Button */}
-                    <button onClick={async()=>{await signOutUser()}} id="Btn-Sign-Out" >SIGN OUT <FaSignOutAlt size = "25" style = {{marginLeft: "10px"}}/></button>
-                    {/* Upload Image Button Component */}
-                    <UploadImage  userInfo = {userInfo}/>
-                    
-                </div>
+                    ? <ProgressIndicator />
+                    : <>
+                        <DigitalCard userInfo={userInfo} />
+                        <div id="Action-Buttons">
+                            <div id="Top-Right">
+                                {isCurrUser && <>
+                                    <button id="Btn-Sign-Out" onClick={handleSignoutClick}  >SIGN OUT <FaSignOutAlt size="25" style={{ marginLeft: "10px" }} /></button>
+                                    <Link to="/edit" id="Edit" >
+                                        <FaEdit size="45"/>
+                                    </Link>
+                                </>}
+                            </div>
+                            <div id="Bottom-Right">
+                                <a id="Whatsapp" target='blank' href={`https://api.whatsapp.com/send?text=Hey,%20checkout%20my%20business%20card%20${window.location.href}`}>
+                                    <FaWhatsapp size="55" color='green'/>
+                                </a>
+                                {isCurrUser && <UploadImage userInfo={userInfo} />}
+
+                            </div>
+                            
+                        </div>
+                    </>
             }
-            
+
         </div>
     )
 }
