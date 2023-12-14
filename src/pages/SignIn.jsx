@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React,{useState, useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import "./SignIn.scss";
 import {useAuthState} from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
-import { signInUsingEmailPassword ,sendEmailVerificationLink} from '../services/firebaseAuthService';
+import { signInUsingEmailPassword } from '../services/firebaseAuthService';
 import { Link } from 'react-router-dom';
 import ProgressIndicator from '../components/ProgressIndicator';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -33,17 +34,9 @@ const SignIn = () => {
         
         document.title = "Signin - Digital Visiting Card"
         
-        
-        // console.log("Current user = ",user);
         if (loadingAuthState) return;
         // If user signed in, navigate to HOME page
         if (user){
-            // if(!user.emailVerified){
-            //     sendEmailVerificationLink(user)
-            // }else{
-            //     console.log("Email verified");
-            //     return navigate("/");
-            // }
             return navigate("/");
         }
         setLoading(false);

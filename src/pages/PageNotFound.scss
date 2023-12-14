@@ -1,15 +1,12 @@
+@import '../constants/common';
+@import '../constants/variables';
+
 #Page-Not-Found{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--Color1);
+    @include flex-center;
+    background-color: $PRIMARY;
     min-height: 100vh;
     text-align: center;
     color: white;
-    // h1,h2{
-    //     text-align: center;
-    // }
     
     #Btn-Back-Home{
         padding: 6px;

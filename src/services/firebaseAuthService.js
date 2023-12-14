@@ -42,7 +42,7 @@ const signUpUsingEmailPassword = async (data) =>{
             ...userData
 
         },{merge: true});
-        console.log("Userdata added to firestore");
+        console.log("Userdata Added");
 
     }catch(e){
         console.log("signUpUsingEmailPassword error ", e.message);
@@ -90,13 +90,36 @@ const getUserData = async (userId) =>{
         const userDocRef = doc(db,"users",userId);
         const docSnapshot =await getDoc(userDocRef);
         if(!docSnapshot.exists){
-            console.log("User data not found!")
-            alert("ERROR : User data not found!");
+            alert("ERROR : User not found!");
             return null;
         }
 
         return docSnapshot.data();
 
+    }catch(e){
+        console.log(e);
+        alert(e.message);
+    }
+}
+
+const updateUserData = async(userId, updatedData)=>{
+    try{
+        if(!userId || !updatedData){
+            return;
+        }
+        const userDocRef = doc(db,"users",userId);
+        const docSnapshot =await getDoc(userDocRef);
+        if(!docSnapshot.exists){
+            alert("ERROR : User not found!");
+            return null;
+        }
+        delete updatedData['email'];
+        delete updatedData['uid'];
+        await setDoc(userDocRef,{
+            ...updatedData
+        },{merge: true});
+        console.log("Userdata Updated");
+        return true;
     }catch(e){
         console.log(e);
         alert(e.message);
@@ -130,7 +153,8 @@ export {
     resetPasswordUsingEmail,
     sendEmailVerificationLink,
     signOutUser,
-    getUserData
+    getUserData,
+    updateUserData
 };
 
 // let otp = prompt("Enter OTP sent to phone number");

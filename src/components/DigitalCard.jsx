@@ -1,145 +1,141 @@
-import React,{useState,useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import "./DigitalCard.scss";
 import QRCode from "qrcode.react";
-import { FaImage, FaUserTie, FaPhoneAlt,FaLink, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import {
+    FaImage,
+    FaUserTie,
+    FaPhoneAlt,
+    FaLink,
+    FaEnvelope,
+    FaMapMarkerAlt,
+} from "react-icons/fa";
 
 const DigitalCard = ({ userInfo }) => {
-  const [isRotated,updateRotated] = useState(false);
+    const saveContact = () => {
+        var vcard = generateVCardData(userInfo);
+        var blob = new Blob([vcard], { type: "text/vcard" });
+        var url = URL.createObjectURL(blob);
 
-  const rotateCard=()=>{
-    console.log("Rotate");
-    updateRotated(!isRotated);
+        const newLink = document.createElement("a");
+        newLink.download = `${userInfo.firstName}_${userInfo.lastName}.vcf`;
+        newLink.textContent = userInfo.firstName;
+        newLink.href = url;
 
-    if(!isRotated){
-      document.getElementsByClassName('card')[0].style.transform = 'rotateY(180deg)'
-    }else{
-      document.getElementsByClassName('card')[0].style.transform = 'rotateY(0deg)';
-    }
-  }
+        newLink.click();
+    };
 
-  const handlePhoneClick =async(attempt)=>{
-    if(attempt>2)
-      return false;
-    const body = {
-      "uid": userInfo.uid,
-      "firstName" : userInfo.firstName,
-      "lastName": userInfo.lastName,
-      "organisation": userInfo.businessName,
-      "phone":userInfo.mobile,
-      "workPhone":userInfo.mobile,
-      "email":userInfo.email,
-      "url":userInfo.website
-    }
-    // https://vcf-generator.herokuapp.com //Old Url
-    return fetch("https://dgtlcard-vcard-generator.glitch.me/vcf/generate-vcf", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })  // FETCH BLOB
-      .then((response) => response.blob())
-      .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
-        var _url = window.URL.createObjectURL(blob);
-        window.open(_url, "_blank"); // window.open + focus
-        return true;
-      }).catch(async (err) => {
-        attempt++;
-        var retry = await handlePhoneClick(attempt);
-        console.log("Attempt = ", attempt, retry);
-        if(attempt===3 && retry===false){
-          alert("Something went wrong! Try again later.");
+    const generateVCardData = (userInfo) => {
+        // Construct the vCard data using the contact details
+        let {
+            firstName = "",
+            lastName = "",
+            mobile = "",
+            email = "",
+            businessName = "",
+            website = "",
+        } = userInfo;
+        if (mobile.length === 10 || mobile.length === 11) {
+            mobile = `+91${mobile}`;
         }
-        console.log(err);
-        return false;
+        return `BEGIN:VCARD
+VERSION:4.0
+FN:${firstName} ${lastName}
+TEL;TYPE=work,voice:${mobile}
+EMAIL:${email}
+ORG:${businessName}
+URL:${website}
+END:VCARD`;
+    };
 
-      });
+    const getClickableLink = (link) => {
+        if (!link) {
+            return "";
+        }
+        return link.startsWith("http://") || link.startsWith("https://")
+            ? link
+            : `http://${link}`;
+    };
 
-  }
+    useEffect(() => {
+        let title = "Digital Visiting Card";
+        if (userInfo.firstName) {
+            title = userInfo.firstName;
+            if (userInfo.lastName) {
+                title = title + " - Digital Visiting Card";
+            }
+        }
+        document.title = title;
+    }, []);
 
-  const getClickableLink = link => {
-    if(!link){
-      return ''
-    }
-    return link.startsWith("http://") || link.startsWith("https://") ?
-      link
-      : `http://${link}`;
-  };
+    return (
+        <div className="card">
+            <div className="card__left">
+                {/* userInfo.about */}
+                {userInfo.imgUrl === null ||
+                userInfo.imgUrl === undefined ||
+                userInfo.imgUrl === "" ? (
+                    <FaImage id="img-profile" size="50" color="#1187ac" />
+                ) : (
+                    <img id="img-profile" src={userInfo.imgUrl} alt="pic" />
+                )}
+                <h3 id="businessname">{userInfo.businessName}</h3>
 
-  useEffect(() => {
-    let title = "Digital Visiting Card"
-    if(userInfo.firstName){
-      title = userInfo.firstName;
-      if(userInfo.lastName){
-        title = title+ " - Digital Visiting Card"
-      }
-    }
-    document.title = title
-
-    // if(userInfo.imgUrl){
-    //   var link = document.querySelector("link[rel~='icon']");
-    //   if (!link) {
-    //     link = document.createElement('link');
-    //     link.rel = 'icon';
-    //     document.getElementsByTagName('head')[0].appendChild(link);
-    //   }
-    //   link.href = userInfo.imgUrl;
-    // }
-
-  }, []);
-
-  
-  return (
-    <div onDoubleClick={rotateCard}  className="card-wrapper">
-      <div  className="card">
-        <div className="card-front">
-          <div className="left">
-          {/* userInfo.about */}
-              {
-                userInfo.imgUrl===null || userInfo.imgUrl===undefined||userInfo.imgUrl===''
-                ? <FaImage id = "Img-Profile" size = "50" color="#1187ac"/>
-                : <img id = "Img-Profile" src={userInfo.imgUrl} alt="pic" />
-              }
-            <h3 id="business-name">{userInfo.businessName}</h3>
-          </div>
-          <div className="right">
-            <div className="person right-content">
-              <FaUserTie  className="icon" />
-              <h4>{userInfo.firstName} {userInfo.lastName}</h4>
+                <QRCode
+                    id="qr"
+                    value={generateVCardData(userInfo)}
+                    style={{
+                        marginBottom: "20px",
+                        height: "100px",
+                        width: "100px",
+                    }}
+                />
+                <button onClick={() => saveContact()} id="btn-contact">
+                    Save Contact
+                </button>
             </div>
-            <div className="phone right-content">
-              <FaPhoneAlt className="icon" />
-              {/* <p onClick={()=>handlePhoneClick(1)}>{userInfo.mobile}</p> */}
-              <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
+            <div className="card__right">
+                <div className="person card__right__item">
+                    <FaUserTie className="icon" />
+                    <h4>
+                        {userInfo.firstName} {userInfo.lastName}
+                    </h4>
+                </div>
+                <div className="phone card__right__item">
+                    <FaPhoneAlt className="icon" />
+                    {/* <p onClick={()=>handlePhoneClick(1)}>{userInfo.mobile}</p> */}
+                    <a href={"tel:" + userInfo.mobile}>{userInfo.mobile}</a>
+                </div>
+                <div className="email card__right__item">
+                    <FaEnvelope className="icon" />
+                    <a href={"mailto:" + userInfo.email}>{userInfo.email}</a>
+                </div>
+                <div className="website card__right__item">
+                    <FaLink className="icon" />
+                    <a href={getClickableLink(userInfo.website)} target="blank">
+                        {userInfo.website ? userInfo.website : "NO URL"}
+                    </a>
+                </div>
+                <div className="address card__right__item">
+                    <FaMapMarkerAlt className="icon" />
+                    <a
+                        href={"http://maps.google.com/?q=" + userInfo.address}
+                        target="blank"
+                    >
+                        {userInfo.address}
+                    </a>
+                </div>
+
+                {/* <div className="about">
+                    <p >ABOUT: </p>
+                    <p >{userInfo.about} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat ab, aliquam dolores unde alias dicta obcaecati quibusdam? Ullam ipsa sunt, deserunt officiis velit culpa temporibus ad aspernatur, accusamus perferendis veritatis?</p>
+                </div> */}
+                
+                <p id="about"> <b>ABOUT: </b> {userInfo.about}</p>
+
             </div>
-            <div className="email right-content">
-              <FaEnvelope className="icon" />
-              <a href={"mailto:" +userInfo.email}>{userInfo.email}</a>
-            </div>
-            <div className="website right-content">
-              <FaLink className="icon" />
-              <a href={getClickableLink(userInfo.website)} target="blank">{userInfo.website ? userInfo.website : "NO URL"}</a>
-            </div>
-            <div className="address right-content">
-              <FaMapMarkerAlt className="icon" />
-              <a href={"http://maps.google.com/?q="+userInfo.address} target ="blank">{userInfo.address}</a>
-            </div>
-            
-          </div>
         </div>
-        <div className="card-back">
-          {/* <a href={'//' + userInfo.website} target="_blank">{userInfo.website}</a> <br /> */}
-          {/* <QRCode id="qr-code" value={userInfo.website} style={{ marginBottom: "20px", height: "100px", width: "100px" }} /> */}
-          <QRCode id = "qr-code" value={window.location.origin +'/'+ userInfo.uid} style={{ marginBottom:"20px" , height: "100px", width: "100px" }}/>
-          <button onClick={() => handlePhoneClick(1)}  id="save-contact">Save Contact</button>
-          <br />
-          <a href={"tel:" + userInfo.mobile}>PHONE :- {userInfo.mobile}</a>
-          <br />
-          <p>ABOUT:-{userInfo.about}</p>
-        </div>
-      </div>
-    </div>
-  )
-}
+    );
+};
 
 export default DigitalCard;
